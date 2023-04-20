@@ -450,7 +450,7 @@ namespace CCad
                 
                 using (Graphics g = Graphics.FromImage(pictureBox1.Image))
                 {
-                Pen pen = new Pen(Color.White);
+                Pen pen = new Pen(Color.Black);
                 for (i = 0; i < 801; i=i+50)
                     {
 
@@ -462,6 +462,36 @@ namespace CCad
                 }
             
             pictureBox1.Invalidate();
+        }
+
+        private void refreshToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (count > 0)
+            {
+                int n = 0;
+                Boolean b = false;
+                
+                for (n = 0; n < count; n++)
+                {
+
+                    // Desenha a linha na picture1 em branco
+                    using (Graphics g = Graphics.FromImage(pictureBox1.Image))
+                    {
+                        if (b == false)
+                        {
+                            b = true;
+                            g.Clear(Color.Blue);
+                        }
+                        Pen pen = new Pen(Color.White);
+                        g.DrawLine(pen, xxx[n], yyy[n], xxx2[n], yyy2[n]);
+
+                    }
+
+
+                }
+                pictureBox1.Invalidate();
+
+            }
         }
     }
     }

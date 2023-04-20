@@ -42,6 +42,7 @@
             this.svgToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.circleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gridToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.refreshToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -81,7 +82,8 @@
             this.newToolStripMenuItem,
             this.svgToolStripMenuItem,
             this.circleToolStripMenuItem,
-            this.gridToolStripMenuItem});
+            this.gridToolStripMenuItem,
+            this.refreshToolStripMenuItem});
             this.menuToolStripMenuItem.Name = "menuToolStripMenuItem";
             this.menuToolStripMenuItem.Size = new System.Drawing.Size(60, 24);
             this.menuToolStripMenuItem.Text = "menu";
@@ -150,6 +152,13 @@
             this.gridToolStripMenuItem.Text = "grid";
             this.gridToolStripMenuItem.Click += new System.EventHandler(this.gridToolStripMenuItem_Click);
             // 
+            // refreshToolStripMenuItem
+            // 
+            this.refreshToolStripMenuItem.Name = "refreshToolStripMenuItem";
+            this.refreshToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.refreshToolStripMenuItem.Text = "refresh";
+            this.refreshToolStripMenuItem.Click += new System.EventHandler(this.refreshToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -186,5 +195,6 @@
         private ToolStripMenuItem svgToolStripMenuItem;
         private ToolStripMenuItem circleToolStripMenuItem;
         private ToolStripMenuItem gridToolStripMenuItem;
+        private ToolStripMenuItem refreshToolStripMenuItem;
     }
 }
