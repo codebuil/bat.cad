@@ -438,5 +438,30 @@ namespace CCad
                 pictureBox1.Invalidate();
 
             }
+
+        private void gridToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
+            int i = 0;
+            
+            
+            
+            
+                
+                using (Graphics g = Graphics.FromImage(pictureBox1.Image))
+                {
+                Pen pen = new Pen(Color.White);
+                for (i = 0; i < 801; i=i+50)
+                    {
+
+                    g.DrawLine(pen, i, 0, i, 800);
+
+                    g.DrawLine(pen, 0, i, 800, i);
+                    }
+
+                }
+            
+            pictureBox1.Invalidate();
         }
+    }
     }
