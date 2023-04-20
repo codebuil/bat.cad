@@ -12,6 +12,7 @@ namespace CCad
         private bool _draw = false;
         Form2 form2 = new Form2();
         Form3 form3 = new Form3();
+        Form4 form4 = new Form4();
         int[] xxx = new int[1000];
         int[] yyy = new int[1000];
         int[] xxx2 = new int[1000];
@@ -363,7 +364,7 @@ namespace CCad
             {
                 using (StreamWriter file = new StreamWriter(form2.MyString))
                 {
-                    file.WriteLine("<svg width=\"800\" height=\"800\" viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\">\r\n");
+                    file.WriteLine("<svg width=\"800\" height=\"800\" viewBox=\"0 0 800 800\" xmlns=\"http://www.w3.org/2000/svg\">\r\n");
                     file.WriteLine("<rect width=\"800\" height=\"800\" fill=\"#00f\"/>\r\n");
                     for (n = 0; n < count; n++)
                     {
@@ -385,5 +386,57 @@ namespace CCad
                 }
             }
         }
+
+        private void circleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int xxxxx = 0;
+            int yyyyy = 0;
+            int zzzzz = 0;
+            int xx = 0;
+            int yy = 0;
+            int xx2 = 0;
+            int yy2 = 0;
+            int i = 0;
+            form4.MyString = "";
+            form4.ShowDialog();
+            xxxxx = form4.xxxxx;
+            yyyyy = form4.yyyyy;
+            zzzzz = form4.yyyyy;
+            if (form4.MyString != "" )
+            {
+                double x = xxxxx;
+                double y = yyyyy;
+                double raio = zzzzz;
+                double delta = Math.PI / 12;
+                using (Graphics g = Graphics.FromImage(pictureBox1.Image))
+                {
+                    for (i = 0; i < 24; i++)
+                    {
+                        double angle = i * delta;
+                        double x1 = x + raio * Math.Cos(angle);
+                        double y1 = y + raio * Math.Sin(angle);
+                        angle = (i + 1) * delta;
+                        if (i == 23) angle = 0 * delta;
+                        double x2 = x + raio * Math.Cos(angle);
+                        double y2 = y + raio * Math.Sin(angle);
+                        xx = (int)x1;
+                        yy = (int)y1;
+                        xx2 = (int)x2;
+                        yy2 = (int)y2;
+                        xxx[count] = xx;
+                        yyy[count] = yy;
+                        xxx2[count] = xx2;
+                        yyy2[count] = yy2;
+                        count++;
+
+                        Pen pen = new Pen(Color.White);
+                        g.DrawLine(pen, xx, yy, xx2, yy2);
+                    }
+
+                }
+            }
+                pictureBox1.Invalidate();
+
+            }
+        }
     }
-}

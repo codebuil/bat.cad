@@ -7,25 +7,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CCad
 {
-    public partial class Form3 : Form
+    public partial class Form4 : Form
     {
-        public string MyString { get; set; }
-        public int xxxxx { get; set; }
-        public int yyyyy { get; set; }
-        public Form3()
+        public Form4()
         {
             InitializeComponent();
         }
+        public string MyString { get; set; }
+        public int xxxxx { get; set; }
+        public int yyyyy { get; set; }
+        public int zzzzz { get; set; }
+
 
         private void button1_Click(object sender, EventArgs e)
         {
-            xxxxx=int.Parse(this.textBox2.Text.ToString());
+            zzzzz = int.Parse(this.textBox1.Text.ToString());
+            xxxxx = int.Parse(this.textBox2.Text.ToString());
             yyyyy = int.Parse(this.textBox3.Text.ToString());
-            MyString = this.textBox1.Text.ToString();
+            MyString = ".";
             this.Hide();
         }
 
