@@ -39,6 +39,7 @@
             this.saveToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.mergeAtXYToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.svgToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -75,7 +76,8 @@
             this.backToolStripMenuItem,
             this.saveToolStripMenuItem1,
             this.mergeAtXYToolStripMenuItem,
-            this.newToolStripMenuItem});
+            this.newToolStripMenuItem,
+            this.svgToolStripMenuItem});
             this.menuToolStripMenuItem.Name = "menuToolStripMenuItem";
             this.menuToolStripMenuItem.Size = new System.Drawing.Size(60, 24);
             this.menuToolStripMenuItem.Text = "menu";
@@ -84,44 +86,51 @@
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(170, 26);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.saveToolStripMenuItem.Text = "export";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click_1);
             // 
             // loadToolStripMenuItem
             // 
             this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
-            this.loadToolStripMenuItem.Size = new System.Drawing.Size(170, 26);
+            this.loadToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.loadToolStripMenuItem.Text = "load";
             this.loadToolStripMenuItem.Click += new System.EventHandler(this.loadToolStripMenuItem_Click);
             // 
             // backToolStripMenuItem
             // 
             this.backToolStripMenuItem.Name = "backToolStripMenuItem";
-            this.backToolStripMenuItem.Size = new System.Drawing.Size(170, 26);
+            this.backToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.backToolStripMenuItem.Text = "back";
             this.backToolStripMenuItem.Click += new System.EventHandler(this.backToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem1
             // 
             this.saveToolStripMenuItem1.Name = "saveToolStripMenuItem1";
-            this.saveToolStripMenuItem1.Size = new System.Drawing.Size(170, 26);
+            this.saveToolStripMenuItem1.Size = new System.Drawing.Size(224, 26);
             this.saveToolStripMenuItem1.Text = "save";
             this.saveToolStripMenuItem1.Click += new System.EventHandler(this.saveToolStripMenuItem1_Click);
             // 
             // mergeAtXYToolStripMenuItem
             // 
             this.mergeAtXYToolStripMenuItem.Name = "mergeAtXYToolStripMenuItem";
-            this.mergeAtXYToolStripMenuItem.Size = new System.Drawing.Size(170, 26);
+            this.mergeAtXYToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.mergeAtXYToolStripMenuItem.Text = "mergeAt.XY";
             this.mergeAtXYToolStripMenuItem.Click += new System.EventHandler(this.mergeAtXYToolStripMenuItem_Click);
             // 
             // newToolStripMenuItem
             // 
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(170, 26);
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.newToolStripMenuItem.Text = "new";
             this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
+            // 
+            // svgToolStripMenuItem
+            // 
+            this.svgToolStripMenuItem.Name = "svgToolStripMenuItem";
+            this.svgToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.svgToolStripMenuItem.Text = "svg";
+            this.svgToolStripMenuItem.Click += new System.EventHandler(this.svgToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -156,5 +165,6 @@
         private ToolStripMenuItem saveToolStripMenuItem1;
         private ToolStripMenuItem mergeAtXYToolStripMenuItem;
         private ToolStripMenuItem newToolStripMenuItem;
+        private ToolStripMenuItem svgToolStripMenuItem;
     }
 }

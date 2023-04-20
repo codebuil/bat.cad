@@ -352,5 +352,38 @@ namespace CCad
                 }
             }
         }
+
+        private void svgToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            form2.MyString = "";
+            form2.ShowDialog();
+            int n = 0;
+            string s = "";
+            if (form2.MyString != "")
+            {
+                using (StreamWriter file = new StreamWriter(form2.MyString))
+                {
+                    file.WriteLine("<svg width=\"800\" height=\"800\" viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\">\r\n");
+                    file.WriteLine("<rect width=\"800\" height=\"800\" fill=\"#00f\"/>\r\n");
+                    for (n = 0; n < count; n++)
+                    {
+
+
+
+
+                        Pen pen = new Pen(Color.White);
+                        s = "<line x1=\"" + xxx[n].ToString() + "\" y1=\"" + yyy[n].ToString() + "\" x2=\"" + xxx2[n].ToString() + "\" y2=\"" + yyy2[n].ToString() + "\" stroke=\"#fff\" stroke-width=\"2\"/>\r\n";
+                        file.WriteLine(s);
+
+
+
+
+
+                    }
+                    file.WriteLine("</svg>\r\n");
+                    file.Close();
+                }
+            }
+        }
     }
 }
