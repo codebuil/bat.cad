@@ -11,6 +11,7 @@ namespace CCad
         private bool _drawing = false;
         private bool _draw = false;
         Form2 form2 = new Form2();
+        Form3 form3 = new Form3();
         int[] xxx = new int[1000];
         int[] yyy = new int[1000];
         int[] xxx2 = new int[1000];
@@ -186,14 +187,168 @@ namespace CCad
 
 
                         Pen pen = new Pen(Color.White);
-                        file.WriteLine("line," +xxx[n].ToString()+"," +yyy[n].ToString() + "," +xxx2[n].ToString() + ","+ yyy2[n].ToString()+"\r\n");
+                        file.WriteLine("line," + xxx[n].ToString() + "," + yyy[n].ToString() + "," + xxx2[n].ToString() + "," + yyy2[n].ToString() + "\r\n");
 
 
 
 
                     }
-                    
+
                     file.Close();
+                }
+            }
+        }
+
+        private void mergeAtXYToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int xxxxx = 0;
+            int yyyyy = 0;
+            form3.MyString = "";
+            form3.ShowDialog();
+            xxxxx = form3.xxxxx;
+            yyyyy = form3.yyyyy;
+            if (form3.MyString != "" && File.Exists(form3.MyString))
+            {
+
+                Boolean b = false;
+                string[] linhas = System.IO.File.ReadAllLines(form3.MyString); // Lê todas as linhas do arquivo
+
+                foreach (string linha in linhas) // Percorre cada linha do arquivo
+                {
+                    if (linha.StartsWith("line")) // Verifica se a linha começa com a string "line,0,0,100"
+                    {
+                        // Separa as coordenadas da linha
+                        string[] coords = linha.Split(',');
+                        if (coords.Count() > 4)
+                        {
+                            int x1 = int.Parse(coords[1]) + xxxxx;
+                            int y1 = int.Parse(coords[2]) + yyyyy;
+                            int x2 = int.Parse(coords[3]) + xxxxx;
+                            int y2 = int.Parse(coords[4]) + yyyyy;
+                            xxx[count] = x1;
+                            yyy[count] = y1;
+                            xxx2[count] = x2;
+                            yyy2[count] = y2;
+                            count++;
+                            // Desenha a linha na picture1 em branco
+                            using (Graphics g = Graphics.FromImage(pictureBox1.Image))
+                            {
+                                if (b == false)
+                                {
+                                    b = true;
+
+                                }
+                                Pen pen = new Pen(Color.White);
+                                g.DrawLine(pen, x1, y1, x2, y2);
+                            }
+                        }
+                    }
+                }
+                pictureBox1.Invalidate();
+            }
+        }
+
+        private void newToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            form2.MyString = "";
+            form2.ShowDialog();
+            int n = 0;
+            if (form2.MyString != "")
+            {
+                using (StreamWriter file = new StreamWriter(form2.MyString))
+                {
+                    for (n = 0; n < count; n++)
+                    {
+
+
+
+
+                        Pen pen = new Pen(Color.White);
+                        file.WriteLine("line," + xxx[n].ToString() + "," + yyy[n].ToString() + "," + xxx2[n].ToString() + "," + yyy2[n].ToString() + "\r\n");
+
+
+
+
+                    }
+
+                    file.Close();
+                    using (Graphics g = Graphics.FromImage(pictureBox1.Image))
+                    {
+
+
+                        g.Clear(Color.Blue);
+                    }
+                    pictureBox1.Invalidate();
+                }
+            }
+        }
+
+        private void Form1_Leave(object sender, EventArgs e)
+        {
+            form2.MyString = "";
+            form2.ShowDialog();
+            int n = 0;
+            if (form2.MyString != "")
+            {
+                using (StreamWriter file = new StreamWriter(form2.MyString))
+                {
+                    for (n = 0; n < count; n++)
+                    {
+
+
+
+
+                        Pen pen = new Pen(Color.White);
+                        file.WriteLine("line," + xxx[n].ToString() + "," + yyy[n].ToString() + "," + xxx2[n].ToString() + "," + yyy2[n].ToString() + "\r\n");
+
+
+
+
+                    }
+
+                    file.Close();
+                    using (Graphics g = Graphics.FromImage(pictureBox1.Image))
+                    {
+
+
+                        g.Clear(Color.Blue);
+                    }
+                    pictureBox1.Invalidate();
+                }
+            }
+        }
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            form2.MyString = "";
+            form2.ShowDialog();
+            int n = 0;
+            if (form2.MyString != "")
+            {
+                using (StreamWriter file = new StreamWriter(form2.MyString))
+                {
+                    for (n = 0; n < count; n++)
+                    {
+
+
+
+
+                        Pen pen = new Pen(Color.White);
+                        file.WriteLine("line," + xxx[n].ToString() + "," + yyy[n].ToString() + "," + xxx2[n].ToString() + "," + yyy2[n].ToString() + "\r\n");
+
+
+
+
+                    }
+
+                    file.Close();
+                    using (Graphics g = Graphics.FromImage(pictureBox1.Image))
+                    {
+
+
+                        g.Clear(Color.Blue);
+                    }
+                    pictureBox1.Invalidate();
                 }
             }
         }
