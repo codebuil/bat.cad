@@ -17,6 +17,9 @@ namespace CCad
         int[] yyy = new int[1000];
         int[] xxx2 = new int[1000];
         int[] yyy2 = new int[1000];
+        Boolean selects = false;
+        Boolean dselects = false;
+        int last = 999;
         int count = 0;
 
         public Form1()
@@ -39,32 +42,92 @@ namespace CCad
                 g.Clear(Color.Blue);
             }
             pictureBox1.Invalidate(); // Redesenha a imagem
+            xxx[last] = 0;
+            xxx2[last] = 0;
+            yyy[last] = 0;
+            yyy2[last] = 0;
         }
 
 
         private void pictureBox1_MouseDown_1(object sender, MouseEventArgs e)
         {
-            _startPoint = e.Location;
-            _drawing = true;
-
+            if (selects)
+            {
+                
+            }
+            else
+            {
+                _startPoint = e.Location;
+                _drawing = true;
+            }   
         }
 
         private void pictureBox1_MouseUp_1(object sender, MouseEventArgs e)
         {
-            _endPoint = e.Location;
-            _drawing = false;
-            _draw = true;
-            using (Graphics g = Graphics.FromImage(pictureBox1.Image))
+            if (selects)
             {
-                Pen pen = new Pen(Color.White);
-                xxx[count] = _startPoint.X;
-                yyy[count] = _startPoint.Y;
-                xxx2[count] = _endPoint.X;
-                yyy2[count] = _endPoint.Y;
-                count++;
-                g.DrawLine(pen, _startPoint, _endPoint);
+                int n = 0;
+                int ssss = -1;
+                int xxxxx=0;
+                int yyyyy = 0;
+                int xxxxx2 = 0;
+                int yyyyy2 = 0;
+                for (n = count - 1; n > -1; n--)
+                {
+                    if (xxx[n]<xxx2[n] && yyy[n] < yyy2[n])
+                    {
+                        if (e.Location.X >= xxx[n] && e.Location.Y >= yyy[n] && e.Location.X <= xxx2[n] && e.Location.Y >= yyy2[n]) ssss = n;
+                    }
+                    if (xxx[n] > xxx2[n] && yyy[n] > yyy2[n])
+                    {
+                        if (e.Location.X >= xxx2[n] && e.Location.Y >= yyy2[n] && e.Location.X <= xxx[n] && e.Location.Y >= yyy[n]) ssss = n;
+                    }
+                    if (xxx[n] > xxx2[n] && yyy[n] < yyy2[n])
+                    {
+                        if (e.Location.X >= xxx2[n] && e.Location.Y >= yyy[n] && e.Location.X <= xxx[n] && e.Location.Y >= yyy2[n]) ssss = n;
+                    }
+                    if (xxx[n] < xxx2[n] && yyy[n] > yyy2[n])
+                    {
+                        if (e.Location.X >= xxx[n] && e.Location.Y >= yyy2[n] && e.Location.X <= xxx2[n] && e.Location.Y >= yyy[n]) ssss = n;
+                    }
+
+                }
+                if (ssss > -1)
+                {
+                    
+                        selects = false;
+                    dselects = true;
+                    using (Graphics g = Graphics.FromImage(pictureBox1.Image))
+                    {
+                        Pen pen = new Pen(Color.Black);
+                        xxx[last] = xxx[ssss];
+                        yyy[last] = yyy[ssss];
+                        xxx2[last] = xxx2[ssss];
+                        yyy2[last] = yyy2[ssss];
+                        
+                        g.DrawLine(pen, xxx[ssss], yyy[ssss], xxx2[ssss], yyy2[ssss]);
+                    }
+                    pictureBox1.Invalidate(); // Redesenha a imagem
+                }
+                
             }
-            pictureBox1.Invalidate(); // Redesenha a imagem
+            if(!selects && !dselects)
+            {
+                _endPoint = e.Location;
+                _drawing = false;
+                _draw = true;
+                using (Graphics g = Graphics.FromImage(pictureBox1.Image))
+                {
+                    Pen pen = new Pen(Color.White);
+                    xxx[count] = _startPoint.X;
+                    yyy[count] = _startPoint.Y;
+                    xxx2[count] = _endPoint.X;
+                    yyy2[count] = _endPoint.Y;
+                    count++;
+                    g.DrawLine(pen, _startPoint, _endPoint);
+                }
+                pictureBox1.Invalidate(); // Redesenha a imagem
+            }
         }
 
         private void pictureBox1_Paint_1(object sender, PaintEventArgs e)
@@ -492,6 +555,43 @@ namespace CCad
                 pictureBox1.Invalidate();
 
             }
+        }
+
+        private void selectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!selects && !dselects)
+            {
+                dselects = false;
+                selects = true;
+                selectToolStripMenuItem.Checked = true;
+            }
+            else
+            {
+                if (dselects)
+                {
+                    using (Graphics g = Graphics.FromImage(pictureBox1.Image))
+                    {
+
+                        Pen pen = new Pen(Color.White);
+                        g.DrawLine(pen, xxx[last], yyy[last], xxx2[last], yyy2[last]);
+                    }
+                    pictureBox1.Invalidate();
+                    dselects = false;
+                    selects = false;
+                    selectToolStripMenuItem.Checked = false;
+                }
+                else { 
+
+                    selects = false;
+                    dselects = false;
+                    selectToolStripMenuItem.Checked = false;
+                }
+            }
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
         }
     }
     }
