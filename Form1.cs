@@ -19,6 +19,7 @@ namespace CCad
         int[] yyy2 = new int[1000];
         Boolean selects = false;
         Boolean dselects = false;
+        int sselect = -1;
         int last = 999;
         int count = 0;
 
@@ -92,6 +93,7 @@ namespace CCad
                     }
 
                 }
+                sselect = ssss;
                 if (ssss > -1)
                 {
                     
@@ -579,8 +581,10 @@ namespace CCad
                     dselects = false;
                     selects = false;
                     selectToolStripMenuItem.Checked = false;
+                    sselect = -1;
                 }
-                else { 
+                else {
+                    sselect = -1;
 
                     selects = false;
                     dselects = false;
@@ -592,6 +596,53 @@ namespace CCad
         private void pictureBox1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (dselects && sselect > -1)
+            {
+                int n=0;
+                count--;
+                for (n = sselect; n < count; n++)
+                {
+                    xxx[n] = xxx[n + 1];
+                    yyy[n] = yyy[n + 1];
+                    xxx2[n] = xxx2[n + 1];
+                    yyy2[n] = yyy2[n + 1];
+
+                }
+                if (count > 0)
+                {
+                    n = 0;
+                    Boolean b = false;
+
+                    for (n = 0; n < count; n++)
+                    {
+
+                        // Desenha a linha na picture1 em branco
+                        using (Graphics g = Graphics.FromImage(pictureBox1.Image))
+                        {
+                            if (b == false)
+                            {
+                                b = true;
+                                g.Clear(Color.Blue);
+                            }
+                            Pen pen = new Pen(Color.White);
+                            g.DrawLine(pen, xxx[n], yyy[n], xxx2[n], yyy2[n]);
+
+                        }
+
+
+                    }
+                    pictureBox1.Invalidate();
+
+                }
+
+            }
+            selects = false;
+            dselects = false;
+            selectToolStripMenuItem.Checked = false;
         }
     }
     }
