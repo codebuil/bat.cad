@@ -1,3 +1,5 @@
+using Microsoft.VisualBasic;
+using System.Diagnostics;
 using System.Diagnostics.Metrics;
 using System.Windows.Forms;
 
@@ -52,7 +54,7 @@ namespace CCad
 
         private void pictureBox1_MouseDown_1(object sender, MouseEventArgs e)
         {
-            if (selects)
+            if (dselects || selects)
             {
                 
             }
@@ -73,28 +75,58 @@ namespace CCad
                 int yyyyy = 0;
                 int xxxxx2 = 0;
                 int yyyyy2 = 0;
+                sselect = -1;
                 for (n = count - 1; n > -1; n--)
                 {
-                    if (xxx[n]<xxx2[n] && yyy[n] < yyy2[n])
+                    if (xxx[n] <= xxx2[n] && yyy[n] <= yyy2[n])
                     {
-                        if (e.Location.X >= xxx[n] && e.Location.Y >= yyy[n] && e.Location.X <= xxx2[n] && e.Location.Y >= yyy2[n]) ssss = n;
+                        if (e.Location.X >= xxx[n] && e.Location.Y >= yyy[n] && e.Location.X <= xxx2[n] && e.Location.Y <= yyy2[n])
+                        {
+                            Console.WriteLine("xxx[n] >= xxx2[n] && yyy[n] >= yyy2[n]");
+                            sselect = n;
+                            n = -1;
+                        }
                     }
-                    if (xxx[n] > xxx2[n] && yyy[n] > yyy2[n])
+                    else
                     {
-                        if (e.Location.X >= xxx2[n] && e.Location.Y >= yyy2[n] && e.Location.X <= xxx[n] && e.Location.Y >= yyy[n]) ssss = n;
+                        if (xxx[n] >= xxx2[n] && yyy[n] >= yyy2[n])
+                        {
+                            if (e.Location.X >= xxx2[n] && e.Location.Y >= yyy2[n] && e.Location.X <= xxx[n] && e.Location.Y <= yyy[n])
+                            {
+                                Console.WriteLine("xxx[n] >= xxx2[n] && yyy[n] >= yyy2[n]");
+                                sselect = n;
+                                n = -1;
+                            }
+                        }
+                        else
+                        {
+                            if (xxx[n] >= xxx2[n] && yyy[n] <= yyy2[n])
+                            {
+                                if (e.Location.X >= xxx2[n] && e.Location.Y >= yyy[n] && e.Location.X <= xxx[n] && e.Location.Y <= yyy2[n])
+                                {
+                                    Console.WriteLine("xxx[n] >= xxx2[n] && yyy[n] <= yyy2[n]");
+                                    sselect = n;
+                                    n = -1;
+                                }
+                            }
+                            else
+                            {
+                                if (xxx[n] <= xxx2[n] && yyy[n] >= yyy2[n])
+                                {
+                                    if (e.Location.X >= xxx[n] && e.Location.Y >= yyy2[n] && e.Location.X <= xxx2[n] && e.Location.Y <= yyy[n])
+                                    {
+                                        // ("xxx[n] <= xxx2[n] && yyy[n] >= yyy2[n]");
+                                        
+                                        sselect = n;
+                                        n = -1;
+                                    }
+                                }
+                            }
+                        }
                     }
-                    if (xxx[n] > xxx2[n] && yyy[n] < yyy2[n])
-                    {
-                        if (e.Location.X >= xxx2[n] && e.Location.Y >= yyy[n] && e.Location.X <= xxx[n] && e.Location.Y >= yyy2[n]) ssss = n;
-                    }
-                    if (xxx[n] < xxx2[n] && yyy[n] > yyy2[n])
-                    {
-                        if (e.Location.X >= xxx[n] && e.Location.Y >= yyy2[n] && e.Location.X <= xxx2[n] && e.Location.Y >= yyy[n]) ssss = n;
-                    }
-
                 }
-                sselect = ssss;
-                if (ssss > -1)
+                
+                if (sselect > -1)
                 {
                     
                         selects = false;
@@ -102,12 +134,12 @@ namespace CCad
                     using (Graphics g = Graphics.FromImage(pictureBox1.Image))
                     {
                         Pen pen = new Pen(Color.Black);
-                        xxx[last] = xxx[ssss];
-                        yyy[last] = yyy[ssss];
-                        xxx2[last] = xxx2[ssss];
-                        yyy2[last] = yyy2[ssss];
+                        xxx[last] = xxx[sselect];
+                        yyy[last] = yyy[sselect];
+                        xxx2[last] = xxx2[sselect];
+                        yyy2[last] = yyy2[sselect];
                         
-                        g.DrawLine(pen, xxx[ssss], yyy[ssss], xxx2[ssss], yyy2[ssss]);
+                        g.DrawLine(pen, xxx[sselect], yyy[sselect], xxx2[sselect], yyy2[sselect]);
                     }
                     pictureBox1.Invalidate(); // Redesenha a imagem
                 }
