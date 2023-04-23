@@ -351,6 +351,7 @@ namespace CCad
             form2.MyString = "";
             form2.ShowDialog();
             int n = 0;
+            
             if (form2.MyString != "")
             {
                 using (StreamWriter file = new StreamWriter(form2.MyString))
@@ -379,6 +380,7 @@ namespace CCad
                     pictureBox1.Invalidate();
                 }
             }
+            count = 0;
         }
 
         private void Form1_Leave(object sender, EventArgs e)
