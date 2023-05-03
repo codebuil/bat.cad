@@ -4,6 +4,7 @@ using System.Diagnostics.Metrics;
 using System.Windows.Forms;
 using System;
 using System.IO;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 
 namespace CCad
@@ -22,8 +23,8 @@ namespace CCad
         int[] yyy = new int[1000];
         int[] xxx2 = new int[1000];
         int[] yyy2 = new int[1000];
-        Boolean selects = false;
-        Boolean dselects = false;
+        bool selects = false;
+        bool dselects = false;
         int sselect = -1;
         int last = 999;
         int count = 0;
@@ -204,7 +205,7 @@ namespace CCad
             if (form2.MyString != "" && File.Exists(form2.MyString))
             {
                 count = 0;
-                Boolean b = false;
+                bool b = false;
                 string[] linhas = System.IO.File.ReadAllLines(form2.MyString); // Lê todas as linhas do arquivo
 
                 foreach (string linha in linhas) // Percorre cada linha do arquivo
@@ -247,7 +248,7 @@ namespace CCad
             if (count > 0)
             {
                 int n = 0;
-                Boolean b = false;
+                bool b = false;
                 count--;
                 for (n = 0; n < count; n++)
                 {
@@ -311,7 +312,7 @@ namespace CCad
             if (form3.MyString != "" && File.Exists(form3.MyString))
             {
 
-                Boolean b = false;
+                bool b = false;
                 string[] linhas = System.IO.File.ReadAllLines(form3.MyString); // Lê todas as linhas do arquivo
 
                 foreach (string linha in linhas) // Percorre cada linha do arquivo
@@ -571,7 +572,7 @@ namespace CCad
             if (count > 0)
             {
                 int n = 0;
-                Boolean b = false;
+                bool b = false;
 
                 for (n = 0; n < count; n++)
                 {
@@ -653,7 +654,7 @@ namespace CCad
                 if (count > 0)
                 {
                     n = 0;
-                    Boolean b = false;
+                    bool b = false;
 
                     for (n = 0; n < count; n++)
                     {
@@ -742,7 +743,7 @@ namespace CCad
                 {
 
                     int n = 0;
-                    Boolean b = false;
+                    bool b = false;
 
                     for (n = 0; n < count; n++)
                     {
@@ -767,6 +768,38 @@ namespace CCad
                 }
             }
 
+        }
+
+        private void saveToolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            form2.MyString = "";
+            form2.ShowDialog();
+            if(form2.MyString != "")
+            {
+                const string Header = "batcad";
+
+                using (var fileStream = new FileStream(form2.MyString, FileMode.Create))
+                using (var binaryWriter = new BinaryWriter(fileStream))
+                {
+                    // Write header
+                    var headerBytes = System.Text.Encoding.ASCII.GetBytes(Header);
+                    binaryWriter.Write(headerBytes);
+
+                    // Write file size
+                    var fileSize = (int)count;
+                    binaryWriter.Write(fileSize);
+                    int v = 1;
+                    // Write data
+                    for(int i=0;i<count;i++)
+                    {
+                        binaryWriter.Write(v);
+                        binaryWriter.Write(xxx[i]);
+                        binaryWriter.Write(yyy[i]);
+                        binaryWriter.Write(xxx2[i]);
+                        binaryWriter.Write(yyy2[i]);
+                    }
+                }
+            }
         }
     }
 }
