@@ -45,6 +45,7 @@
             this.refreshToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.selectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadbinaryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -88,7 +89,8 @@
             this.gridToolStripMenuItem,
             this.refreshToolStripMenuItem,
             this.selectToolStripMenuItem,
-            this.deleteToolStripMenuItem});
+            this.deleteToolStripMenuItem,
+            this.loadbinaryToolStripMenuItem});
             this.menuToolStripMenuItem.Name = "menuToolStripMenuItem";
             this.menuToolStripMenuItem.Size = new System.Drawing.Size(60, 24);
             this.menuToolStripMenuItem.Text = "menu";
@@ -178,6 +180,13 @@
             this.deleteToolStripMenuItem.Text = "delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
+            // loadbinaryToolStripMenuItem
+            // 
+            this.loadbinaryToolStripMenuItem.Name = "loadbinaryToolStripMenuItem";
+            this.loadbinaryToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.loadbinaryToolStripMenuItem.Text = "load_binary";
+            this.loadbinaryToolStripMenuItem.Click += new System.EventHandler(this.loadbinaryToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -217,5 +226,6 @@
         private ToolStripMenuItem refreshToolStripMenuItem;
         private ToolStripMenuItem selectToolStripMenuItem;
         private ToolStripMenuItem deleteToolStripMenuItem;
+        private ToolStripMenuItem loadbinaryToolStripMenuItem;
     }
 }

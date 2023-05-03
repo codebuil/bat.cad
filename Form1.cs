@@ -2,6 +2,9 @@ using Microsoft.VisualBasic;
 using System.Diagnostics;
 using System.Diagnostics.Metrics;
 using System.Windows.Forms;
+using System;
+using System.IO;
+
 
 namespace CCad
 {
@@ -56,13 +59,13 @@ namespace CCad
         {
             if (dselects || selects)
             {
-                
+
             }
             else
             {
                 _startPoint = e.Location;
                 _drawing = true;
-            }   
+            }
         }
 
         private void pictureBox1_MouseUp_1(object sender, MouseEventArgs e)
@@ -71,7 +74,7 @@ namespace CCad
             {
                 int n = 0;
                 int ssss = -1;
-                int xxxxx=0;
+                int xxxxx = 0;
                 int yyyyy = 0;
                 int xxxxx2 = 0;
                 int yyyyy2 = 0;
@@ -116,7 +119,7 @@ namespace CCad
                                     if (e.Location.X >= xxx[n] && e.Location.Y >= yyy2[n] && e.Location.X <= xxx2[n] && e.Location.Y <= yyy[n])
                                     {
                                         // ("xxx[n] <= xxx2[n] && yyy[n] >= yyy2[n]");
-                                        
+
                                         sselect = n;
                                         n = -1;
                                     }
@@ -125,11 +128,11 @@ namespace CCad
                         }
                     }
                 }
-                
+
                 if (sselect > -1)
                 {
-                    
-                        selects = false;
+
+                    selects = false;
                     dselects = true;
                     using (Graphics g = Graphics.FromImage(pictureBox1.Image))
                     {
@@ -138,14 +141,14 @@ namespace CCad
                         yyy[last] = yyy[sselect];
                         xxx2[last] = xxx2[sselect];
                         yyy2[last] = yyy2[sselect];
-                        
+
                         g.DrawLine(pen, xxx[sselect], yyy[sselect], xxx2[sselect], yyy2[sselect]);
                     }
                     pictureBox1.Invalidate(); // Redesenha a imagem
                 }
-                
+
             }
-            if(!selects && !dselects)
+            if (!selects && !dselects)
             {
                 _endPoint = e.Location;
                 _drawing = false;
@@ -351,7 +354,7 @@ namespace CCad
             form2.MyString = "";
             form2.ShowDialog();
             int n = 0;
-            
+
             if (form2.MyString != "")
             {
                 using (StreamWriter file = new StreamWriter(form2.MyString))
@@ -501,7 +504,7 @@ namespace CCad
             xxxxx = form4.xxxxx;
             yyyyy = form4.yyyyy;
             zzzzz = form4.yyyyy;
-            if (form4.MyString != "" )
+            if (form4.MyString != "")
             {
                 double x = xxxxx;
                 double y = yyyyy;
@@ -534,32 +537,32 @@ namespace CCad
 
                 }
             }
-                pictureBox1.Invalidate();
+            pictureBox1.Invalidate();
 
-            }
+        }
 
         private void gridToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
+
             int i = 0;
-            
-            
-            
-            
-                
-                using (Graphics g = Graphics.FromImage(pictureBox1.Image))
-                {
+
+
+
+
+
+            using (Graphics g = Graphics.FromImage(pictureBox1.Image))
+            {
                 Pen pen = new Pen(Color.Black);
-                for (i = 0; i < 801; i=i+50)
-                    {
+                for (i = 0; i < 801; i = i + 50)
+                {
 
                     g.DrawLine(pen, i, 0, i, 800);
 
                     g.DrawLine(pen, 0, i, 800, i);
-                    }
-
                 }
-            
+
+            }
+
             pictureBox1.Invalidate();
         }
 
@@ -569,7 +572,7 @@ namespace CCad
             {
                 int n = 0;
                 Boolean b = false;
-                
+
                 for (n = 0; n < count; n++)
                 {
 
@@ -617,7 +620,8 @@ namespace CCad
                     selectToolStripMenuItem.Checked = false;
                     sselect = -1;
                 }
-                else {
+                else
+                {
                     sselect = -1;
 
                     selects = false;
@@ -636,7 +640,7 @@ namespace CCad
         {
             if (dselects && sselect > -1)
             {
-                int n=0;
+                int n = 0;
                 count--;
                 for (n = sselect; n < count; n++)
                 {
@@ -678,5 +682,92 @@ namespace CCad
             dselects = false;
             selectToolStripMenuItem.Checked = false;
         }
+
+        private void loadbinaryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            form2.MyString = "";
+            form2.ShowDialog();
+            if (form2.MyString != "" && File.Exists(form2.MyString))
+            {
+                
+                count = 0;
+                const string Header = "batcad";
+                const int RecordSize = 20; // 5 integers * 4 bytes each
+
+                using (var fileStream = new FileStream(form2.MyString, FileMode.Open))
+                using (var binaryReader = new BinaryReader(fileStream))
+                {
+                    // Read header
+                    
+                    var headerBytes = binaryReader.ReadBytes(Header.Length);
+                    var header = System.Text.Encoding.ASCII.GetString(headerBytes);
+                    if (header != Header)
+                    {
+                        
+                        return;
+                    }
+
+                    // Read file size
+                    Int32 fileSize = binaryReader.ReadInt32();
+                    var recordCount =  fileSize;
+                    
+                    // Read records
+                    for (int i = 0; i < recordCount; i++)
+                    {
+                        
+                        int firstInt =(int) binaryReader.ReadInt32();
+                        if (firstInt == 1)
+                        {
+                            
+                            var ints = new int[5];
+                            for (int j = 0; j < 4; j++)
+                            {
+                                ints[j] =(int) binaryReader.ReadInt32();
+                            }
+                            
+                            
+                                
+                                    xxx[count] = ints[0];
+                                    yyy[count] = ints[1];
+                                    xxx2[count] = ints[2];
+                                    yyy2[count] = ints[3];
+                                    count++;
+                                
+                            
+                        }
+                    }
+                    binaryReader.Close();
+                }
+                if (count > 0)
+                {
+
+                    int n = 0;
+                    Boolean b = false;
+
+                    for (n = 0; n < count; n++)
+                    {
+
+                        // Desenha a linha na picture1 em branco
+                        using (Graphics g = Graphics.FromImage(pictureBox1.Image))
+                        {
+                            if (b == false)
+                            {
+                                b = true;
+                                g.Clear(Color.Blue);
+                            }
+                            Pen pen = new Pen(Color.White);
+                            g.DrawLine(pen, xxx[n], yyy[n], xxx2[n], yyy2[n]);
+
+                        }
+
+
+                    }
+                    pictureBox1.Invalidate();
+
+                }
+            }
+
+        }
     }
-    }
+}
+    
