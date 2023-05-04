@@ -48,6 +48,7 @@
             this.loadbinaryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.load3dbatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadbmptocopyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -94,7 +95,8 @@
             this.deleteToolStripMenuItem,
             this.loadbinaryToolStripMenuItem,
             this.saveToolStripMenuItem2,
-            this.load3dbatToolStripMenuItem});
+            this.load3dbatToolStripMenuItem,
+            this.loadbmptocopyToolStripMenuItem});
             this.menuToolStripMenuItem.Name = "menuToolStripMenuItem";
             this.menuToolStripMenuItem.Size = new System.Drawing.Size(60, 24);
             this.menuToolStripMenuItem.Text = "menu";
@@ -205,6 +207,13 @@
             this.load3dbatToolStripMenuItem.Text = "load_3d_bat";
             this.load3dbatToolStripMenuItem.Click += new System.EventHandler(this.load3dbatToolStripMenuItem_Click);
             // 
+            // loadbmptocopyToolStripMenuItem
+            // 
+            this.loadbmptocopyToolStripMenuItem.Name = "loadbmptocopyToolStripMenuItem";
+            this.loadbmptocopyToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.loadbmptocopyToolStripMenuItem.Text = "load_bmp_to_copy";
+            this.loadbmptocopyToolStripMenuItem.Click += new System.EventHandler(this.loadbmptocopyToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -247,5 +256,6 @@
         private ToolStripMenuItem loadbinaryToolStripMenuItem;
         private ToolStripMenuItem saveToolStripMenuItem2;
         private ToolStripMenuItem load3dbatToolStripMenuItem;
+        private ToolStripMenuItem loadbmptocopyToolStripMenuItem;
     }
 }

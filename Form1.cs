@@ -28,7 +28,7 @@ namespace CCad
         int sselect = -1;
         int last = 999;
         int count = 0;
-        double scale = 800.00;
+        double scale = 400.00;
         double units = 10.00;
 
         public Form1()
@@ -872,6 +872,44 @@ namespace CCad
                     }
                 }
                 pictureBox1.Invalidate();
+            }
+        }
+
+        private void loadbmptocopyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            form2.MyString = "";
+            form2.ShowDialog();
+            int n = 0;
+            if (form2.MyString != "")
+            {
+                pictureBox1.Load(form2.MyString);
+
+            }
+            if (count > 0)
+            {
+                n = 0;
+                bool b = false;
+
+                for (n = 0; n < count; n++)
+                {
+
+                    // Desenha a linha na picture1 em branco
+                    using (Graphics g = Graphics.FromImage(pictureBox1.Image))
+                    {
+                        if (b == false)
+                        {
+                            b = true;
+                            
+                        }
+                        Pen pen = new Pen(Color.White);
+                        g.DrawLine(pen, xxx[n], yyy[n], xxx2[n], yyy2[n]);
+
+                    }
+
+
+                }
+                pictureBox1.Invalidate();
+
             }
         }
     }
