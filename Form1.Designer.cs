@@ -47,6 +47,7 @@
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadbinaryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.load3dbatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -92,7 +93,8 @@
             this.selectToolStripMenuItem,
             this.deleteToolStripMenuItem,
             this.loadbinaryToolStripMenuItem,
-            this.saveToolStripMenuItem2});
+            this.saveToolStripMenuItem2,
+            this.load3dbatToolStripMenuItem});
             this.menuToolStripMenuItem.Name = "menuToolStripMenuItem";
             this.menuToolStripMenuItem.Size = new System.Drawing.Size(60, 24);
             this.menuToolStripMenuItem.Text = "menu";
@@ -196,6 +198,13 @@
             this.saveToolStripMenuItem2.Text = "save_binary";
             this.saveToolStripMenuItem2.Click += new System.EventHandler(this.saveToolStripMenuItem2_Click);
             // 
+            // load3dbatToolStripMenuItem
+            // 
+            this.load3dbatToolStripMenuItem.Name = "load3dbatToolStripMenuItem";
+            this.load3dbatToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.load3dbatToolStripMenuItem.Text = "load_3d_bat";
+            this.load3dbatToolStripMenuItem.Click += new System.EventHandler(this.load3dbatToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -237,5 +246,6 @@
         private ToolStripMenuItem deleteToolStripMenuItem;
         private ToolStripMenuItem loadbinaryToolStripMenuItem;
         private ToolStripMenuItem saveToolStripMenuItem2;
+        private ToolStripMenuItem load3dbatToolStripMenuItem;
     }
 }

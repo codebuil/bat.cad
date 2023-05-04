@@ -28,6 +28,8 @@ namespace CCad
         int sselect = -1;
         int last = 999;
         int count = 0;
+        double scale = 800.00;
+        double units = 10.00;
 
         public Form1()
         {
@@ -37,7 +39,32 @@ namespace CCad
 
 
 
-
+        double wasm_draw3Dx(double x, double y, double z)
+        {
+            double zz = (z + 1.00) * 1.50;
+            double zzz = scale / zz;
+            double zzzz = scale / 2 - zzz / 2;
+            double zzzzz = (zzz / units) * x;
+            double zzzzzz = zzzz + zzzzz;
+            return zzzzzz;
+        }
+        double wasm_draw3Dy(double x, double y, double z)
+        {
+            double zz = (z + 1.00) * 1.50;
+            double zzz = scale / zz;
+            double zzzz = scale / 2 - zzz / 2;
+            double zzzzz = (zzz / units) * (units - y);
+            double zzzzzz = zzzz + zzzzz - (z * 2);
+            return zzzzzz;
+        }
+        void setScale(double sc)
+        {
+            scale = sc;
+        }
+        void setunits(double sc)
+        {
+            units = sc;
+        }
 
 
         private void Form1_Load(object sender, EventArgs e)
@@ -799,6 +826,52 @@ namespace CCad
                         binaryWriter.Write(yyy2[i]);
                     }
                 }
+            }
+        }
+
+        private void load3dbatToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            form2.MyString = "";
+            form2.ShowDialog();
+            if (form2.MyString != "" && File.Exists(form2.MyString))
+            {
+                count = 0;
+                bool b = false;
+                string[] linhas = System.IO.File.ReadAllLines(form2.MyString); // Lê todas as linhas do arquivo
+
+                foreach (string linha in linhas) // Percorre cada linha do arquivo
+                {
+                    if (linha.StartsWith("line")) // Verifica se a linha começa com a string "line,0,0,100"
+                    {
+                        // Separa as coordenadas da linha
+                        string[] coords = linha.Split(',');
+                        if (coords.Count() > 6)
+                        {
+                            int x1 =(int)wasm_draw3Dx((double)int.Parse(coords[1].ToString()), (double)int.Parse(coords[2].ToString()), (double)int.Parse(coords[3].ToString()));
+                            int y1 = (int)wasm_draw3Dy((double)int.Parse(coords[1].ToString()), (double)int.Parse(coords[2].ToString()), (double)int.Parse(coords[3].ToString()));
+                            int x2 = (int)wasm_draw3Dx((double)int.Parse(coords[4].ToString()), (double)int.Parse(coords[5].ToString()), (double)int.Parse(coords[6].ToString()));
+                            int y2 = (int)wasm_draw3Dy((double)int.Parse(coords[4].ToString()), (double)int.Parse(coords[5].ToString()), (double)int.Parse(coords[6].ToString()));
+                            xxx[count] = x1;
+                            yyy[count] = y1;
+                            xxx2[count] = x2;
+                            yyy2[count] = y2;
+                            count++;
+                            // Desenha a linha na picture1 em branco
+                            using (Graphics g = Graphics.FromImage(pictureBox1.Image))
+                            {
+                                if (b == false)
+                                {
+                                    b = true;
+                                    g.Clear(Color.Blue);
+                                }
+                                Pen pen = new Pen(Color.White);
+                                g.DrawLine(pen, x1, y1, x2, y2);
+                            }
+                        }
+                    }
+                }
+                pictureBox1.Invalidate();
             }
         }
     }
