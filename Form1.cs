@@ -880,7 +880,7 @@ namespace CCad
             form2.MyString = "";
             form2.ShowDialog();
             int n = 0;
-            if (form2.MyString != "")
+            if (form2.MyString != "" && File.Exists(form2.MyString))
             {
                 pictureBox1.Load(form2.MyString);
 
@@ -910,6 +910,96 @@ namespace CCad
                 }
                 pictureBox1.Invalidate();
 
+            }
+        }
+
+        private void loToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            form2.MyString = "";
+            form2.ShowDialog();
+            if (form2.MyString != "" && File.Exists(form2.MyString))
+            {
+
+                count = 0;
+                const string Header = "bat3d";
+                const int RecordSize = 20; // 5 integers * 4 bytes each
+
+                using (var fileStream = new FileStream(form2.MyString, FileMode.Open))
+                using (var binaryReader = new BinaryReader(fileStream))
+                {
+                    // Read header
+
+                    var headerBytes = binaryReader.ReadBytes(Header.Length);
+                    var header = System.Text.Encoding.ASCII.GetString(headerBytes);
+                    if (header != Header)
+                    {
+
+                        return;
+                    }
+
+                    // Read file size
+                    Int32 fileSize = binaryReader.ReadInt32();
+                    var recordCount = fileSize;
+
+                    // Read records
+                    for (int i = 0; i < recordCount; i++)
+                    {
+                       
+                        int firstInt = (int)binaryReader.ReadInt32();
+                        if (firstInt == 1)
+                        {
+                           
+                            var ints = new int[8];
+                            for (int j = 0; j < 6; j++)
+                            {
+                                ints[j] = (int)binaryReader.ReadInt32();
+                            }
+
+                            int x1 = (int)wasm_draw3Dx((double)ints[0], (double)ints[1], (double)ints[2]);
+                            int y1 = (int)wasm_draw3Dy((double)ints[0], (double)ints[1], (double)ints[2]);
+                            int x2 = (int)wasm_draw3Dx((double)ints[3], (double)ints[4], (double)ints[5]);
+                            int y2 = (int)wasm_draw3Dy((double)ints[3], (double)ints[4], (double)ints[5]);
+                            xxx[count] = x1;
+                            yyy[count] = y1;
+                            xxx2[count] = x2;
+                            yyy2[count] = y2;
+                            count++;
+
+                           
+                            
+
+
+                        }
+                    }
+                    binaryReader.Close();
+                }
+                if (count > 0)
+                {
+                    
+                    int n = 0;
+                    bool b = false;
+
+                    for (n = 0; n < count; n++)
+                    {
+
+                        // Desenha a linha na picture1 em branco
+                        using (Graphics g = Graphics.FromImage(pictureBox1.Image))
+                        {
+                            if (b == false)
+                            {
+                                b = true;
+                                g.Clear(Color.Blue);
+                            }
+                            Pen pen = new Pen(Color.White);
+                            g.DrawLine(pen, xxx[n], yyy[n], xxx2[n], yyy2[n]);
+
+                        }
+
+
+                    }
+                    pictureBox1.Invalidate();
+
+                }
             }
         }
     }
